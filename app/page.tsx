@@ -1,12 +1,13 @@
 "use client";
 
 import { useChat } from "ai/react";
-import { useRef, useEffect } from "react";
+import { useRef, useEffect, useState } from "react";
 import Markdown from "react-markdown";
 import rehypeHighlight from "rehype-highlight";
 
 export default function Chat() {
   const { messages, input, handleInputChange, handleSubmit } = useChat();
+  const [showWelcome, setShowWelcome] = useState(true);
 
   const bottomRef = useRef<HTMLDivElement>(null);
 
@@ -16,9 +17,25 @@ export default function Chat() {
     }
   }, [messages]);
 
+  useEffect(() => {
+    if (messages.length > 0) {
+      setShowWelcome(false);
+    }
+  }, [messages]);
+
   return (
-    <div className="flex flex-col w-full max-w-md py-24 mx-auto stretch">
-      <div className="flex-1 overflow-y-auto mb-4">
+    <div className="flex flex-col w-full max-w-2xl py-24 mx-auto stretch relative">
+      {showWelcome && (
+        <div className="absolute top-0 left-0 right-0 p-4 bg-green-100 text-green-800 rounded-lg shadow-md mb-4 z-10">
+          <p className="text-center">
+            Welcome to TheraBot, I am your AI powered Psychotherapist. This
+            conversation is not stored, refreshing the page will delete the
+            conversation.
+          </p>
+        </div>
+      )}
+
+      <div className="flex-1 overflow-y-auto mb-4 px-4">
         {messages.map((m) => (
           <div
             key={m.id}
@@ -28,7 +45,7 @@ export default function Chat() {
               className={`inline-block p-3 rounded-lg ${
                 m.role === "user"
                   ? "bg-blue-500 text-white"
-                  : "bg-gray-200 text-gray-800"
+                  : "bg-green-200 text-green-800"
               }`}
             >
               <Markdown
@@ -41,24 +58,24 @@ export default function Chat() {
             <p className="mt-1 text-xs text-gray-500">
               {m.role === "user" ? "You" : "TheraBot"}
             </p>
-            <div ref={bottomRef} />
           </div>
         ))}
+        <div ref={bottomRef} />
       </div>
 
       <form
         onSubmit={handleSubmit}
-        className="fixed bottom-0 w-full m-auto bg-white p-4"
+        className="fixed bottom-0 w-full max-w-2xl m-auto bg-white p-4 flex"
       >
         <input
-          className="w-full max-w-md p-2 border border-gray-300 rounded-full shadow-inner focus:outline-none focus:ring-2 focus:ring-blue-500"
+          className="flex-grow p-2 border border-gray-300 rounded-l-lg focus:outline-none focus:ring-2 focus:ring-green-500"
           value={input}
           placeholder="Type your message here..."
           onChange={handleInputChange}
         />
         <button
           type="submit"
-          className="absolute bottom-0 ml-4 transform -translate-y-1/2 bg-blue-500 text-white rounded-full p-2"
+          className="bg-green-500 text-white rounded-r-lg p-2 w-12 h-12 flex items-center justify-center"
         >
           <svg
             xmlns="http://www.w3.org/2000/svg"
