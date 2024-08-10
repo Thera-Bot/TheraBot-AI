@@ -1,4 +1,5 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+![](./screenshot.png)
+
 # TheraBot-AI
 
 TheraBot-AI is an AI-powered therapy chatbot that provides support and guidance to individuals dealing with mental health issues. This project aims to create a safe and accessible platform for people to seek help and find solace in their journey towards mental well-being.
