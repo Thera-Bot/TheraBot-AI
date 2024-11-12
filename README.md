@@ -35,7 +35,10 @@ To get started with TheraBot-AI, follow these steps:
     # or
     yarn dev
     ```
-
+5. Include your OpenAI API key inside a `.env.local` file inside the root of you directory:
+   ```text
+    OPENAI_API_KEY=xxxxxxxxx
+   ```
 5. Open [http://localhost:3000](http://localhost:3000) in your browser to access TheraBot-AI.
 
 ## Usage
